@@ -1,0 +1,7 @@
+<ivy-module version="2.0">
+    <info organisation="csgi"  module="test ivy" />
+
+    <dependencies>
+        <dependency org="junit" name="junit" rev="+" />
+    </dependencies>
+</ivy-module>

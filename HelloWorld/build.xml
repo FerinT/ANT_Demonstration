@@ -1,0 +1,44 @@
+<project default="test_run" name="hello-ant" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<!--
+
+    <target name ="run" depends="compile">
+        <java classname="${basedir}/src/main/" classpath="${basedir}/"/>
+        <echo message="run.."/>
+    </target>
+
+    <target name="compile">
+
+        <javac includeantruntime="false" srcdir="${basedir}/src/main/" destdir="${basedir}/" classpath="${basedir}/src/main/">
+        </javac>
+        <echo message="compile.."/>
+    </target>
+-->
+
+    <target name="helloWorld" description="ant printing out hello world :)">
+        <echo message="Hello world.."/>
+    </target>
+
+    <target name="resolve" description="fetching dependencies..">
+        <ivy:resolve file="${basedir}/ivy.xml" />
+        <ivy:retrieve type="jar,bundle" pattern="${basedir}/staging/[artifact].[ext]" ivypattern="${basedir}/staging/[artifact].[ext]" />
+        <echo message="Fetching.."/>
+    </target>
+
+
+    <target name="test_compile" depends="resolve">
+        <javac includeantruntime="false" srcdir="${basedir}/src/test"  destdir="${basedir}/staging" classpath="${basedir}/staging/junit.jar"/>
+    </target>
+
+    <target name="test_run" description="unit test.." depends="test_compile">
+        <junit printsummary="on">
+            <test name="MockTest"/>
+            <classpath>
+                <pathelement location="${basedir}/staging/junit.jar"/>
+                <pathelement location="${basedir}/staging"/>
+            </classpath>
+            <formatter type="plain" usefile="false" /> <!--shows what the error message is-->
+        </junit>
+        <echo message="end of tests.."/>
+    </target>
+
+</project>
