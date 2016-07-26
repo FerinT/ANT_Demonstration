@@ -8,6 +8,7 @@
     <!--Retrieves dependencies needed for this project by using Ivy-->
     <target name="resolve" description="Retrieving dependencies">
         <ivy:resolve file="${basedir}/ivy.xml" />
+		<ivy:settings url="http://artifactory.cpt.intecbilling.com/ivy/ivysettings.xml"/>
         <ivy:retrieve type="jar,bundle" pattern="${basedir}/staging/[artifact].[ext]" ivypattern="${basedir}/staging/[artifact].[ext]" />
         <echo message="Retrieving dependencies"/>
         <mkdir dir="${basedir}/staging"/>
