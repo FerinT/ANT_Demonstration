@@ -1,7 +1,7 @@
-<project default="test_run" name="hello-ant" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project default="clean" name="hello-ant" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <!--Simply prints out "Hello World"-->
-    <target name="helloWorld" description="ant printing out hello world :)">
+    <target name="helloWorld" description="ant printing out hello world">
         <echo message="Hello world.."/>
     </target>
 
@@ -32,4 +32,8 @@
         <echo message="end of tests.."/>
     </target>
 
+    <!--Deletes unnecessary folders-->
+    <target name="clean" description="clean" depends="test_run">
+        <delete dir="${basedir}/staging" />
+    </target>
 </project>
