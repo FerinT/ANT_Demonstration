@@ -1,34 +1,25 @@
 <project default="test_run" name="hello-ant" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
-<!--
 
-    <target name ="run" depends="compile">
-        <java classname="${basedir}/src/main/" classpath="${basedir}/"/>
-        <echo message="run.."/>
-    </target>
-
-    <target name="compile">
-
-        <javac includeantruntime="false" srcdir="${basedir}/src/main/" destdir="${basedir}/" classpath="${basedir}/src/main/">
-        </javac>
-        <echo message="compile.."/>
-    </target>
--->
-
+    <!--Simply prints out "Hello World"-->
     <target name="helloWorld" description="ant printing out hello world :)">
         <echo message="Hello world.."/>
     </target>
 
-    <target name="resolve" description="fetching dependencies..">
+    <!--Retrieves dependencies needed for this project by using Ivy-->
+    <target name="resolve" description="Retrieving dependencies">
         <ivy:resolve file="${basedir}/ivy.xml" />
         <ivy:retrieve type="jar,bundle" pattern="${basedir}/staging/[artifact].[ext]" ivypattern="${basedir}/staging/[artifact].[ext]" />
-        <echo message="Fetching.."/>
+        <echo message="Retrieving dependencies"/>
+        <mkdir dir="${basedir}/staging"/>
+        <echo message="Staging file create"/>
     </target>
 
-
+    <!--Compiles your test class, this is important for when you are not running this via your IDE which automatically compiles your class and creates a .class for you-->
     <target name="test_compile" depends="resolve">
         <javac includeantruntime="false" srcdir="${basedir}/src/test"  destdir="${basedir}/staging" classpath="${basedir}/staging/junit.jar"/>
     </target>
 
+    <!--Runs the compiled .class file created after compilation-->
     <target name="test_run" description="unit test.." depends="test_compile">
         <junit printsummary="on">
             <test name="MockTest"/>
