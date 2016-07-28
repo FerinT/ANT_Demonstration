@@ -17,7 +17,12 @@
 
     <!--Compiles your test class, this is important for when you are not running this via your IDE which automatically compiles your class and creates a .class for you-->
     <target name="test_compile" depends="resolve">
-        <javac includeantruntime="false" srcdir="${basedir}/src"  destdir="${basedir}/staging" classpath="${basedir}/staging/junit.jar"/>
+        <javac includeantruntime="false" srcdir="${basedir}/src"  destdir="${basedir}/staging" >
+    		<classpath>
+                	<pathelement location="${basedir}/staging/junit.jar"/>
+			<pathelement location="${basedir}/staging/hamcrest-core.jar"/>
+		</classpath>
+	</javac> 
     </target>
 
     <!--Runs the compiled .class file created after compilation-->
@@ -27,6 +32,7 @@
             <classpath>
                 <pathelement location="${basedir}/staging/junit.jar"/>
                 <pathelement location="${basedir}/staging"/>
+ 		<pathelement location="${basedir}/staging/hamcrest-core.jar"/>
             </classpath>
             <formatter type="plain" usefile="false" /> <!--shows what the error message is-->
         </junit>
